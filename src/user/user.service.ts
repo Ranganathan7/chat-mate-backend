@@ -47,7 +47,11 @@ export class UserService {
     }
 
     async login(email: string, password: string) {
-        const user = await this.userModel.findOne({ email: email })
+        const user = await this.userModel.findOne(
+            { 
+                $or: [ { email: email }, { name : email } ]
+            }
+        )
         if(!user){
             throw new NotFoundException("Invalid Credentials")
         }

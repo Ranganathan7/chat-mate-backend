@@ -69,10 +69,10 @@ export class ConversationController {
     async addGroupMember(
         @Headers('id') id: string,
         @Body('conversationId') conversationId: string,
-        @Body('users') users: string[],
+        @Body('user') user: string,
         @Body('message') message: string
     ) {
-        return await this.conversationService.addGroupMember(id, conversationId, users, message)
+        return await this.conversationService.addGroupMember(id, conversationId, user, message)
     }
 
     @Patch('remove-group-member')

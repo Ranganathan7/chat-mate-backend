@@ -107,10 +107,10 @@ export class ConversationService {
         return conversation
     }
 
-    async addGroupMember(id: string, conversationId: string, users: string[], message: string): Promise<ConversationType> {
+    async addGroupMember(id: string, conversationId: string, user: string, message: string): Promise<ConversationType> {
         const conversation = await this.conversationModel.findByIdAndUpdate(conversationId, 
             {
-                $push: { users: { $each: users }},
+                $push: { users: user },
                 latestMessage: message,
                 latestMessager: id
             },
