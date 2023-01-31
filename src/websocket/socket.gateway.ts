@@ -36,7 +36,11 @@ export class SocketGateway {
             @ConnectedSocket() client: Socket,
             @MessageBody('conversationId') conversationId: string
         ) {
-        this.server.in(conversationId).emit("message", conversationId)
+        this.server.emit("message", conversationId)
+        // const conversation = await this.conversationService.getConversation(conversationId)
+        // conversation.users.map((user: UserType) => {
+        //     this.server.in(user._id as string).emit("message", conversationId)
+        // })
     }
 
     @SubscribeMessage('newGroup')
@@ -44,10 +48,11 @@ export class SocketGateway {
             @ConnectedSocket() client: Socket,
             @MessageBody('conversationId') conversationId: string
         ) {
-            const conversation = await this.conversationService.getConversation(conversationId)
-            conversation.users.map((user: UserType) => {
-                this.server.in(user._id).emit("message", conversationId)
-            })
+            this.server.emit("message", conversationId)
+            // const conversation = await this.conversationService.getConversation(conversationId)
+            // conversation.users.map((user: UserType) => {
+            //     this.server.in(user._id).emit("message", conversationId)
+            // })
     }  
     
     @SubscribeMessage('deleteGroup')
@@ -55,7 +60,7 @@ export class SocketGateway {
             @ConnectedSocket() client: Socket,
             @MessageBody('conversationId') conversationId: string
         ) {
-        this.server.in(conversationId).emit("deleted", conversationId)
+        this.server.emit("deleted", conversationId)
     }  
 
     @SubscribeMessage('userOnline')
