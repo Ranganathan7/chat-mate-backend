@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Headers, Post, Query, Patch, Put } from "@nestjs/common";
+import { Controller, Get, Body, Headers, Post, Query, Patch, Put, Param } from "@nestjs/common";
 import { ConversationService } from "./conversation.service";
 
 @Controller('chat-mate-api')
@@ -31,6 +31,14 @@ export class ConversationController {
     ) {
         const conversations = await this.conversationService.getConversations(id)
         return conversations
+    }
+
+    @Get('get-conversation/:conversationId')
+    async getConversation(
+        @Param('conversationId') conversationId: string
+    ) {
+        const conversation = await this.conversationService.getConversation(conversationId)
+        return conversation
     }
 
     @Post('create-group-conversation')

@@ -6,6 +6,7 @@ import { ValidateJwtMiddleware } from "src/middlewares/validateJwt.middleware";
 import { Chat, ChatSchema } from "src/schemas/chat.schema";
 import { Conversation, ConversationSchema } from "src/schemas/converstaion.schema";
 import { User, UserSchema } from "src/schemas/user.schema";
+import { SocketGateway } from "src/websocket/socket.gateway";
 import { ConversationController } from "./conversation.controller";
 import { ConversationService } from "./conversation.service";
 
@@ -18,7 +19,7 @@ import { ConversationService } from "./conversation.service";
         ])
     ],
     controllers: [ConversationController],
-    providers: [ConversationService, ChatService]
+    providers: [ConversationService, ChatService, SocketGateway]
 })
 
 export class ConversationModule implements NestModule {

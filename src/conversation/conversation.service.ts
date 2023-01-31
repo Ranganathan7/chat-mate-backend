@@ -78,6 +78,14 @@ export class ConversationService {
             }).populate("users", "-password").populate("admins", "-password").populate("latestMessager", "-password").sort({updatedAt: -1})
         return conversations
     }
+    
+    async getConversation(conversationId: string): Promise<ConversationType> {
+        const conversation = await this.conversationModel.findById
+            (
+                conversationId
+            ).populate("users", "-password").populate("admins", "-password").populate("latestMessager", "-password").sort({updatedAt: -1})
+        return conversation
+    }
 
     async editGroupName(id: string, conversationId: string, conversationName: string, message: string): Promise<ConversationType> {
         const conversation = await this.conversationModel.findByIdAndUpdate(conversationId, 
