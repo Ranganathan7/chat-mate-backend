@@ -1,7 +1,8 @@
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets/decorators"
 import { Server, Socket } from "socket.io"
 import { ConversationService } from "src/conversation/conversation.service"
-import { UserType } from "src/schemas/user.schema"
+import { User, UserType } from "src/schemas/user.schema"
+import { UserAlreadyExistsException } from "src/user/user.exception"
 
 @WebSocketGateway({
     cors: '*'
@@ -38,13 +39,43 @@ export class SocketGateway {
         this.server.in(conversationId).emit("message", conversationId)
     }
 
+    @SubscribeMessage('newGroup')
+    async handleNewGroup(
+            @ConnectedSocket() client: Socket,
+            @MessageBody('conversationId') conversationId: string
+        ) {
+            const conversation = await this.conversationService.getConversation(conversationId)
+            conversation.users.map((user: UserType) => {
+                this.server.in(user._id).emit("message", conversationId)
+            })
+    }  
+    
+    @SubscribeMessage('deleteGroup')
+    async handledeleteGroup(
+            @ConnectedSocket() client: Socket,
+            @MessageBody('conversationId') conversationId: string
+        ) {
+        this.server.in(conversationId).emit("deleted", conversationId)
+    }  
+
     @SubscribeMessage('userOnline')
     async userOnline(@ConnectedSocket() client: Socket) {
         client.broadcast.emit("userOnline")
     }
 
-    @SubscribeMessage('typing') 
-    async typing() {
+    @SubscribeMessage('startTyping') 
+    async startTyping(
+        @MessageBody('conversationId') conversationId: string,
+        @MessageBody('userId') userId: string,
+    ) {
+        this.server.in(conversationId).emit("startedTyping", {conversationId: conversationId, userId: userId})
+    }
 
+    @SubscribeMessage('stopTyping') 
+    async stopTyping(
+        @MessageBody('conversationId') conversationId: string,
+        @MessageBody('userId') userId: string,
+    ) {
+        this.server.in(conversationId).emit("stoppedTyping", {conversationId: conversationId, userId: userId})
     }
 }
