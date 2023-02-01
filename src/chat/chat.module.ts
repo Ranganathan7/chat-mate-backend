@@ -1,11 +1,11 @@
 import { Module, RequestMethod } from "@nestjs/common";
 import { MiddlewareConsumer, NestModule } from "@nestjs/common/interfaces";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ConversationService } from "src/conversation/conversation.service";
-import { ValidateJwtMiddleware } from "src/middlewares/validateJwt.middleware";
-import { Chat, ChatSchema } from "src/schemas/chat.schema";
-import { Conversation, ConversationSchema } from "src/schemas/converstaion.schema";
-import { User, UserSchema } from "src/schemas/user.schema";
+import { ConversationService } from "../conversation/conversation.service";
+import { ValidateJwtMiddleware } from "../middlewares/validateJwt.middleware";
+import { Chat, ChatSchema } from "../schemas/chat.schema";
+import { Conversation, ConversationSchema } from "../schemas/converstaion.schema";
+import { User, UserSchema } from "../schemas/user.schema";
 import { ChatController } from "./chat.controller";
 import { ChatService } from "./chat.service";
 

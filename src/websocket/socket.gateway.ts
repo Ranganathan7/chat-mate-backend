@@ -1,8 +1,6 @@
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets/decorators"
 import { Server, Socket } from "socket.io"
-import { ConversationService } from "src/conversation/conversation.service"
-import { User, UserType } from "src/schemas/user.schema"
-import { UserAlreadyExistsException } from "src/user/user.exception"
+import { ConversationService } from "../conversation/conversation.service"
 
 @WebSocketGateway({
     cors: '*'

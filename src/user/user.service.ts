@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User, UserType } from "src/schemas/user.schema";
+import { User, UserType } from "../schemas/user.schema";
 import * as bcrypt from "bcrypt"
 import { UserAlreadyExistsException } from "./user.exception";
 
