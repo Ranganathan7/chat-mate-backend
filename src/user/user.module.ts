@@ -1,7 +1,6 @@
 import  { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common"
 import { JwtModule } from "@nestjs/jwt";
 import { MongooseModule } from "@nestjs/mongoose";
-import { jwtConstants } from "src/config/constants";
 import { ValidateJwtMiddleware } from "src/middlewares/validateJwt.middleware";
 import { ValidateLoginBodyMiddleware } from "src/middlewares/validateLoginBody.middleware";
 import { ValidateSignupBodyMiddleware } from "src/middlewares/validateSignupBody.middleware";
@@ -15,8 +14,8 @@ import { UserService } from "./user.service";
             { name: User.name, schema: UserSchema}
         ]),
         JwtModule.register({
-            secret: jwtConstants.secret,
-            signOptions: { expiresIn: jwtConstants.expiresIn }
+            secret: "chat-mate-ranguDpro",
+            signOptions: { expiresIn: "30d" }
         })
     ],
     controllers: [UserController],
